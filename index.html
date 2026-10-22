@@ -100,6 +100,32 @@
         <div class="tooth__stage" data-tooth-stage>
           <div class="tooth__bg" aria-hidden="true" data-tooth-bg></div>
           <div class="tooth__halo" aria-hidden="true" data-tooth-halo></div>
+          
+          <!-- floating dental instruments: decorative, orbit the tooth -->
+          <div class="tooth__instruments" aria-hidden="true">
+            <svg class="tooth-tool tooth-tool--mirror" viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="40" cy="30" rx="28" ry="26" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+              <ellipse cx="40" cy="30" rx="22" ry="20" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+              <line x1="40" y1="56" x2="40" y2="190" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="40" cy="30" r="16" fill="currentColor" opacity="0.06"/>
+            </svg>
+            <svg class="tooth-tool tooth-tool--probe" viewBox="0 0 40 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="20" y1="10" x2="20" y2="180" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M20 10 Q14 6 16 0" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="20" cy="94" rx="5" ry="8" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            </svg>
+            <svg class="tooth-tool tooth-tool--forceps" viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 0 C28 30 20 50 22 70 Q28 85 40 85 Q52 85 58 70 C60 50 52 30 50 0" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+              <line x1="30" y1="85" x2="26" y2="195" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+              <line x1="50" y1="85" x2="54" y2="195" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="40" cy="70" r="4" fill="currentColor" opacity="0.12"/>
+            </svg>
+            <svg class="tooth-tool tooth-tool--scaler" viewBox="0 0 40 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="20" y1="20" x2="20" y2="190" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M20 20 Q10 12 12 2 Q14 -2 20 4 Q26 -2 28 2 Q30 12 20 20Z" stroke="currentColor" stroke-width="1.2" fill="currentColor" opacity="0.15"/>
+            </svg>
+          </div>
+
           <canvas class="tooth__canvas" aria-hidden="true" data-tooth-canvas></canvas>
           <div class="tooth__loader" aria-hidden="true" data-tooth-loader>
             <span></span>

@@ -18,16 +18,17 @@ interface SceneOptions {
 
 type Uniforms = Record<string, THREE.IUniform>;
 
-/** Injects the IVORY effects (highlights, root dissolve, x-ray) into the enamel material. */
+/** Injects the IVORY effects (highlights, root dissolve, x-ray, iridescence) into the enamel material. */
 function patchEnamel(material: THREE.MeshPhysicalMaterial, uniforms: Uniforms) {
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec3 vLocal;\nuniform float uStump;')
+      .replace('#include <common>', '#include <common>\nvarying vec3 vLocal;\nvarying vec3 vWorldNormal;\nuniform float uStump;')
       .replace(
         '#include <begin_vertex>',
         `#include <begin_vertex>
         vLocal = position;
+        vWorldNormal = normalize((modelMatrix * vec4(normal, 0.0)).xyz);
         // crown preparation: the enamel crown is ground down to a slimmer stump
         float prep = uStump * smoothstep(0.12, 0.5, position.y);
         transformed.xz *= 1.0 - 0.22 * prep;
@@ -38,8 +39,28 @@ function patchEnamel(material: THREE.MeshPhysicalMaterial, uniforms: Uniforms) {
         '#include <common>',
         `#include <common>
         varying vec3 vLocal;
+        varying vec3 vWorldNormal;
         uniform float uTime, uHl1, uHl2, uCut, uXray, uStump;
-        uniform vec3 uHl1Pos, uHl2Pos, uAccent, uDentin;`,
+        uniform vec3 uHl1Pos, uHl2Pos, uAccent, uDentin;
+
+        // thin-film iridescence: pearlescent rainbow tint on grazing angles
+        vec3 thinFilmIridescence(float cosTheta, float thickness) {
+          float d = thickness * 2.0 * max(cosTheta, 0.01);
+          vec3 color;
+          color.r = cos(d * 12.5664) * 0.5 + 0.5;
+          color.g = cos(d * 12.5664 + 2.0944) * 0.5 + 0.5;
+          color.b = cos(d * 12.5664 + 4.1888) * 0.5 + 0.5;
+          return color;
+        }
+
+        // micro-sparkle: tiny bright spots that catch directional light
+        float sparkle(vec3 p, float t) {
+          vec3 q = fract(p * 28.0) - 0.5;
+          float d = length(q);
+          float phase = dot(floor(p * 28.0), vec3(17.3, 7.7, 13.1));
+          float flicker = sin(phase + t * 3.2) * sin(phase * 1.7 + t * 1.8);
+          return smoothstep(0.14, 0.04, d) * max(flicker, 0.0);
+        }`,
       )
       .replace(
         '#include <clipping_planes_fragment>',
@@ -51,6 +72,12 @@ function patchEnamel(material: THREE.MeshPhysicalMaterial, uniforms: Uniforms) {
         '#include <color_fragment>',
         `#include <color_fragment>
         if (!gl_FrontFacing) diffuseColor.rgb = uDentin;
+
+        // enamel gradient: warmer / translucent near the gum line, pearly white at crown
+        float yNorm = smoothstep(-2.0, 1.4, vLocal.y);
+        vec3 enamelGrad = mix(vec3(0.95, 0.89, 0.82), vec3(0.96, 0.95, 0.93), yNorm);
+        diffuseColor.rgb = mix(diffuseColor.rgb, enamelGrad, 0.35);
+
         // prepared stump under the crown: enamel above the margin turns to dentin
         float stump = uStump * smoothstep(0.1, 0.3, vLocal.y);
         diffuseColor.rgb = mix(diffuseColor.rgb, uDentin * 0.92, stump);
@@ -67,6 +94,16 @@ function patchEnamel(material: THREE.MeshPhysicalMaterial, uniforms: Uniforms) {
       .replace(
         '#include <opaque_fragment>',
         `#include <opaque_fragment>
+        // iridescence: pearlescent rainbow at grazing angles
+        float cosT = abs(dot(normalize(normal), normalize(vViewPosition)));
+        vec3 irid = thinFilmIridescence(cosT, 0.42 + 0.08 * sin(uTime * 0.3));
+        float iridMask = pow(1.0 - cosT, 3.2) * (1.0 - uXray);
+        gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * (0.7 + 0.3 * irid), iridMask * 0.45);
+
+        // micro-sparkle on the surface
+        float sp = sparkle(vLocal, uTime) * (1.0 - uXray) * smoothstep(0.3, 0.6, cosT);
+        gl_FragColor.rgb += vec3(1.0, 0.98, 0.94) * sp * 0.35;
+
         // therapy: composite filling with a scanning ring
         float ring1 = exp(-pow((d1 - 0.36) / 0.03, 2.0));
         float scan1 = 0.5 + 0.5 * sin(d1 * 60.0 - uTime * 5.0);
@@ -84,7 +121,7 @@ function patchEnamel(material: THREE.MeshPhysicalMaterial, uniforms: Uniforms) {
         gl_FragColor.a = mix(gl_FragColor.a, 0.05 + fr * 0.75, uXray);`,
       );
   };
-  material.customProgramCacheKey = () => 'ivory-enamel';
+  material.customProgramCacheKey = () => 'ivory-enamel-v2';
 }
 
 /** Soft fresnel rim for the ceramic crown so it reads as glass-like zirconia. */
@@ -218,14 +255,16 @@ export class ToothScene {
     });
 
     this.enamel = new THREE.MeshPhysicalMaterial({
-      color: '#f5f0e8',
-      roughness: 0.3,
-      metalness: 0,
+      color: '#f7f2eb',
+      roughness: 0.22,
+      metalness: 0.02,
       clearcoat: 1,
-      clearcoatRoughness: 0.1,
-      sheen: 0.5,
-      sheenColor: new THREE.Color('#fff0dc'),
-      sheenRoughness: 0.5,
+      clearcoatRoughness: 0.06,
+      sheen: 0.6,
+      sheenColor: new THREE.Color('#ffe8c8'),
+      sheenRoughness: 0.35,
+      iridescence: 0.3,
+      iridescenceIOR: 1.8,
       side: THREE.DoubleSide,
       transparent: true,
     });
@@ -242,23 +281,29 @@ export class ToothScene {
     });
 
     this.crownMat = new THREE.MeshPhysicalMaterial({
-      color: '#fbfdfc',
-      roughness: 0.1,
-      metalness: 0,
+      color: '#f8fbfa',
+      roughness: 0.06,
+      metalness: 0.01,
       clearcoat: 1,
-      clearcoatRoughness: 0.05,
+      clearcoatRoughness: 0.03,
+      sheen: 0.4,
+      sheenColor: new THREE.Color('#e0f0ea'),
+      sheenRoughness: 0.25,
+      iridescence: 0.15,
+      iridescenceIOR: 1.6,
       transparent: true,
       opacity: 0,
       depthWrite: false,
     });
-    patchRim(this.crownMat, 1.8);
+    patchRim(this.crownMat, 2.0);
 
     const implantMat = new THREE.MeshPhysicalMaterial({
-      color: '#c7ccd0',
+      color: '#d0d5d9',
       metalness: 1,
-      roughness: 0.26,
-      clearcoat: 0.4,
-      clearcoatRoughness: 0.2,
+      roughness: 0.18,
+      clearcoat: 0.6,
+      clearcoatRoughness: 0.12,
+      reflectivity: 0.9,
     });
 
     const { tooth, pulp, crown, implant } = this.parts;

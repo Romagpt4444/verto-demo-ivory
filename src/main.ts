@@ -10,6 +10,7 @@ import { initScroll, scrollToTarget } from './scroll';
 import { counters, doctorTilt, heroIntro, reveals, toothTimeline } from './animations';
 import { initMotes } from './motes';
 import type { ToothScene } from './scene';
+import { initSparkles } from './sparkles';
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mobileQuery = matchMedia('(max-width: 860px), (pointer: coarse)');
@@ -25,10 +26,21 @@ heroIntro(reduced);
 let toothScene: ToothScene | null = null;
 let toothVisible = false;
 let sceneRequested = false;
+const sparkles = reduced ? null : initSparkles(document.querySelector('[data-tooth-stage]')!);
+let lastStage = -1;
 toothTimeline(mobile, {
   onActive: (active) => {
     toothVisible = active;
     toothScene?.setActive(active);
+  },
+  onStageChange: (stage) => {
+    if (stage !== lastStage && stage >= 0 && sparkles) {
+      // burst sparkles near the marker position for this stage
+      const fx = mobile ? 0.5 : 0.62;
+      const fy = 0.45 + Math.random() * 0.1;
+      sparkles.burst(fx, fy, mobile ? 12 : 22);
+    }
+    lastStage = stage;
   },
 });
 

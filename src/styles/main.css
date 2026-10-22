@@ -1454,3 +1454,243 @@ p {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ---------- floating dental instruments ---------- */
+.tooth__instruments {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.tooth-tool {
+  position: absolute;
+  color: var(--accent-ink);
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-out);
+  will-change: transform;
+  filter: drop-shadow(0 2px 8px rgba(44, 116, 98, 0.15));
+}
+.tooth__stage:not(.is-deep) .tooth-tool {
+  opacity: 0.22;
+}
+.tooth-tool--mirror {
+  width: clamp(40px, 5vw, 72px);
+  right: 6%;
+  top: 12%;
+  animation: tool-float-1 14s ease-in-out infinite;
+}
+.tooth-tool--probe {
+  width: clamp(22px, 2.8vw, 38px);
+  left: 8%;
+  top: 62%;
+  animation: tool-float-2 18s ease-in-out infinite;
+}
+.tooth-tool--forceps {
+  width: clamp(36px, 4.5vw, 64px);
+  right: 12%;
+  bottom: 18%;
+  animation: tool-float-3 16s ease-in-out infinite;
+}
+.tooth-tool--scaler {
+  width: clamp(20px, 2.5vw, 34px);
+  left: 5%;
+  top: 22%;
+  animation: tool-float-4 20s ease-in-out infinite;
+}
+@keyframes tool-float-1 {
+  0%, 100% { transform: translate(0, 0) rotate(-12deg); }
+  33% { transform: translate(-8px, 18px) rotate(-4deg); }
+  66% { transform: translate(6px, -12px) rotate(-18deg); }
+}
+@keyframes tool-float-2 {
+  0%, 100% { transform: translate(0, 0) rotate(8deg); }
+  50% { transform: translate(14px, -20px) rotate(16deg); }
+}
+@keyframes tool-float-3 {
+  0%, 100% { transform: translate(0, 0) rotate(6deg); }
+  40% { transform: translate(-12px, -16px) rotate(-8deg); }
+  70% { transform: translate(8px, 10px) rotate(14deg); }
+}
+@keyframes tool-float-4 {
+  0%, 100% { transform: translate(0, 0) rotate(-6deg); }
+  50% { transform: translate(10px, 14px) rotate(10deg); }
+}
+.is-deep .tooth-tool {
+  opacity: 0 !important;
+}
+
+/* ---------- enhanced hero shimmer on title ---------- */
+.hero__title {
+  background: linear-gradient(
+    135deg,
+    var(--ink) 0%,
+    var(--accent-ink) 30%,
+    var(--ink) 50%,
+    var(--accent-ink) 70%,
+    var(--ink) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer-title 8s ease-in-out infinite;
+}
+@keyframes shimmer-title {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ---------- stat glow on reveal ---------- */
+.stat__num {
+  position: relative;
+}
+.stat__num::after {
+  content: '';
+  position: absolute;
+  inset: -6px -10px;
+  border-radius: 12px;
+  background: radial-gradient(closest-side, rgba(126, 200, 176, 0.18), transparent);
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-out);
+}
+.stat.is-visible .stat__num::after {
+  opacity: 1;
+}
+
+/* ---------- section dividers: decorative accent line ---------- */
+.about::before,
+.doctors::before,
+.contact::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 2px;
+  margin: 0 auto 48px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  border-radius: 2px;
+}
+.doctors::before,
+.contact::before {
+  margin-top: 0;
+}
+
+/* ---------- enhanced button magnetic hover ---------- */
+.btn {
+  transition:
+    transform 0.55s var(--ease-expo),
+    box-shadow 0.55s var(--ease-expo),
+    background-color 0.4s var(--ease-out),
+    color 0.4s var(--ease-out);
+}
+.btn:hover {
+  transform: scale(1.04) translateY(-2px);
+  box-shadow:
+    0 16px 40px -12px rgba(44, 116, 98, 0.5),
+    0 4px 12px -4px rgba(44, 116, 98, 0.2);
+}
+
+/* ---------- doc card hover glow ---------- */
+.doc {
+  position: relative;
+}
+.doc::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  border-radius: 32px;
+  background: radial-gradient(closest-side, rgba(126, 200, 176, 0.12), transparent);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+  pointer-events: none;
+}
+.doc:hover::before {
+  opacity: 1;
+}
+
+/* ---------- quote section enhanced ---------- */
+.quote {
+  position: relative;
+  overflow: hidden;
+}
+.quote::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 600px;
+  height: 600px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(126, 200, 176, 0.08), transparent);
+  pointer-events: none;
+}
+
+/* ---------- contact section CTA pulse ---------- */
+.contact .btn--large {
+  position: relative;
+}
+.contact .btn--large::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: transparent;
+  border: 1px solid var(--accent);
+  opacity: 0;
+  animation: cta-pulse 3s var(--ease-out) infinite;
+}
+@keyframes cta-pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.08); opacity: 0; }
+}
+
+/* ---------- halo enhanced: multi-layer gradient ---------- */
+.tooth__halo {
+  background:
+    radial-gradient(closest-side at 42% 45%, rgba(126, 200, 176, 0.14), transparent 60%),
+    radial-gradient(closest-side at 58% 55%, rgba(232, 214, 186, 0.18), transparent 65%),
+    radial-gradient(closest-side, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 72%);
+  animation: halo-breathe 6s ease-in-out infinite;
+}
+@keyframes halo-breathe {
+  0%, 100% { transform: scale(1); filter: blur(0px); }
+  50% { transform: scale(1.04); filter: blur(2px); }
+}
+
+/* ---------- panel kicker: accent dot before text ---------- */
+.panel__kicker::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 8px;
+  vertical-align: middle;
+  animation: kicker-glow 2s ease-in-out infinite;
+}
+@keyframes kicker-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(126, 200, 176, 0.6); }
+  50% { box-shadow: 0 0 8px 3px rgba(126, 200, 176, 0.3); }
+}
+
+/* hide instruments on small screens to avoid clutter */
+@media (max-width: 860px) {
+  .tooth-tool--mirror,
+  .tooth-tool--scaler {
+    display: none;
+  }
+  .tooth-tool--probe {
+    left: 3%;
+    width: 18px;
+  }
+  .tooth-tool--forceps {
+    right: 3%;
+    width: 28px;
+  }
+  .hero__title {
+    background: var(--ink);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}

@@ -30,6 +30,7 @@ export function heroIntro(reduced: boolean) {
 
 export interface ToothTimelineHooks {
   onActive?: (active: boolean) => void;
+  onStageChange?: (stage: number) => void;
 }
 
 /**
@@ -145,6 +146,7 @@ export function toothTimeline(mobile: boolean, hooks: ToothTimelineHooks = {}) {
     if (step !== activeStep) {
       steps.forEach((el, i) => el.classList.toggle('is-active', i === step));
       activeStep = step;
+      hooks.onStageChange?.(step);
     }
   });
 
