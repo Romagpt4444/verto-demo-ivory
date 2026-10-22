@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://verto-demo-ivory.vercel.app/sitemap.xml

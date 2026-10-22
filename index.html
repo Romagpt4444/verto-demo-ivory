@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>IVORY. Эстетическая стоматология на Тверской</title>
+    <meta
+      name="description"
+      content="IVORY: стоматология в Москве, к которой не страшно идти. Лечение под микроскопом, виниры, коронки из циркония и имплантация. Демо-проект Verto Studio."
+    />
+    <meta name="theme-color" content="#F4F0EA" />
+    <link rel="canonical" href="https://verto-demo-ivory.vercel.app/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:title" content="IVORY. Стоматология, к которой не страшно идти" />
+    <meta property="og:description" content="Демо-сайт стоматологической клиники с интерактивным 3D-зубом. Сделано в Verto Studio." />
+    <meta property="og:url" content="https://verto-demo-ivory.vercel.app/" />
+    <meta property="og:image" content="https://verto-demo-ivory.vercel.app/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Dentist",
+        "name": "IVORY (демо-проект Verto Studio)",
+        "description": "Вымышленная клиника, созданная для демонстрации возможностей студии.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "ул. Тверская, 18, стр. 1",
+          "addressLocality": "Москва",
+          "addressCountry": "RU"
+        },
+        "telephone": "+7 495 147-28-36",
+        "openingHours": "Mo-Su 09:00-21:00",
+        "url": "https://verto-demo-ivory.vercel.app/"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
+
+    <header class="nav" data-nav>
+      <div class="nav__inner">
+        <a class="nav__logo" href="#top" aria-label="IVORY, на главную">
+          <svg class="nav__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="15" fill="none" stroke="currentColor" stroke-width="1" />
+            <path d="M16 7v18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+          <span>IVORY</span>
+        </a>
+        <nav class="nav__links" aria-label="Основная навигация">
+          <a href="#services">Услуги</a>
+          <a href="#clinic">Клиника</a>
+          <a href="#doctors">Врачи</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+        <a class="btn btn--small nav__cta" href="#contacts" data-book>Записаться</a>
+        <button class="nav__burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu" data-burger>
+          <span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu" data-menu hidden>
+      <nav aria-label="Мобильная навигация">
+        <a href="#services">Услуги</a>
+        <a href="#clinic">Клиника</a>
+        <a href="#doctors">Врачи</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+      <div class="mobile-menu__foot">
+        <a href="tel:+74951472836">+7 (495) 147-28-36</a>
+        <span>Тверская, 18, стр. 1</span>
+      </div>
+    </div>
+
+    <main id="main">
+      <!-- 1. HERO -->
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <canvas class="hero__motes" aria-hidden="true" data-motes></canvas>
+        <div class="hero__glow" aria-hidden="true"></div>
+        <div class="hero__content" data-hero>
+          <p class="eyebrow hero__eyebrow" data-hero-fade style="--d:1">Эстетическая стоматология на Тверской</p>
+          <h1 class="hero__title" id="hero-title"><span class="sr-only">IVORY</span><span class="hero__chars" aria-hidden="true"><span class="char-mask"><span class="char" style="--i:0">I</span></span><span class="char-mask"><span class="char" style="--i:1">V</span></span><span class="char-mask"><span class="char" style="--i:2">O</span></span><span class="char-mask"><span class="char" style="--i:3">R</span></span><span class="char-mask"><span class="char" style="--i:4">Y</span></span></span></h1>
+          <p class="hero__tagline" data-hero-fade style="--d:2">Стоматология, к&nbsp;которой не&nbsp;страшно идти</p>
+          <p class="hero__sub" data-hero-fade style="--d:3">Лечим, восстанавливаем и&nbsp;возвращаем улыбке белизну. Без боли, спешки и&nbsp;сюрпризов в&nbsp;счёте.</p>
+          <div class="hero__actions" data-hero-fade style="--d:4">
+            <a class="btn" href="#contacts" data-book>Записаться</a>
+            <a class="btn btn--ghost" href="#services">Как мы лечим</a>
+          </div>
+        </div>
+        <a class="hero__scroll" href="#services" data-hero-fade style="--d:5">
+          <span>Прокрутите</span>
+          <i aria-hidden="true"></i>
+        </a>
+      </section>
+
+      <!-- 2. 3D TOOTH, pinned -->
+      <section class="tooth" id="services" aria-labelledby="tooth-title" data-tooth>
+        <div class="tooth__stage" data-tooth-stage>
+          <div class="tooth__bg" aria-hidden="true" data-tooth-bg></div>
+          <div class="tooth__halo" aria-hidden="true" data-tooth-halo></div>
+          <canvas class="tooth__canvas" aria-hidden="true" data-tooth-canvas></canvas>
+          <div class="tooth__loader" aria-hidden="true" data-tooth-loader>
+            <span></span>
+          </div>
+
+          <div class="tooth__markers" aria-hidden="true">
+            <div class="marker" data-marker="0"><i></i><b>Композитная пломба</b></div>
+            <div class="marker" data-marker="1"><i></i><b>Винир 0,3&nbsp;мм</b></div>
+            <div class="marker" data-marker="2"><i></i><b>Коронка из циркония</b></div>
+            <div class="marker" data-marker="3"><i></i><b>Титановый имплант</b></div>
+            <div class="marker" data-marker="4"><i></i><b>Пульпа и&nbsp;каналы</b></div>
+          </div>
+
+          <div class="tooth__panels">
+            <div class="panel panel--intro" data-panel="intro">
+              <h2 class="panel__title" id="tooth-title">Посмотрите на&nbsp;зуб так, как его видит врач</h2>
+              <p>Прокручивайте страницу: зуб повернётся и&nbsp;покажет, где и&nbsp;как мы работаем.</p>
+            </div>
+            <article class="panel" data-panel="0">
+              <span class="panel__kicker">Терапия</span>
+              <h3 class="panel__title">Кариес лечим под микроскопом</h3>
+              <p>Убираем только поражённые ткани и&nbsp;восстанавливаем жевательную поверхность композитом. Пломбу не&nbsp;отличить от&nbsp;эмали ни&nbsp;по&nbsp;цвету, ни&nbsp;языком.</p>
+            </article>
+            <article class="panel" data-panel="1">
+              <span class="panel__kicker">Эстетика</span>
+              <h3 class="panel__title">Виниры тоньше контактной линзы</h3>
+              <p>Керамические пластины выравнивают цвет и&nbsp;форму. Сначала вы примеряете будущую улыбку на&nbsp;макете и&nbsp;только потом решаете. Отбеливание тоже делаем, бережно и&nbsp;без чувствительности.</p>
+            </article>
+            <article class="panel" data-panel="2">
+              <span class="panel__kicker">Ортопедия</span>
+              <h3 class="panel__title">Коронка, которую не&nbsp;видно</h3>
+              <p>Сканируем зуб без слепочной массы, коронку фрезеруем из&nbsp;циркония в&nbsp;своей лаборатории. Она садится точно и&nbsp;по&nbsp;цвету совпадает с&nbsp;соседними зубами.</p>
+            </article>
+            <article class="panel" data-panel="3">
+              <span class="panel__kicker">Имплантация</span>
+              <h3 class="panel__title">Новый корень вместо потерянного</h3>
+              <p>Титановый имплант ставим по&nbsp;цифровому шаблону. Разрез минимальный, операция идёт около часа, а&nbsp;на&nbsp;следующий день можно работать.</p>
+            </article>
+            <article class="panel" data-panel="4">
+              <span class="panel__kicker">Эндодонтия</span>
+              <h3 class="panel__title">Спасаем зуб, а&nbsp;не&nbsp;удаляем</h3>
+              <p>Если воспаление дошло до&nbsp;нерва, проходим каналы под микроскопом и&nbsp;запечатываем их. В&nbsp;большинстве случаев свой зуб удаётся сохранить.</p>
+            </article>
+          </div>
+
+          <div class="hud" aria-hidden="true">
+            <ol class="hud__steps">
+              <li data-step="0">Терапия</li>
+              <li data-step="1">Эстетика</li>
+              <li data-step="2">Ортопедия</li>
+              <li data-step="3">Имплантация</li>
+              <li data-step="4">Внутри</li>
+            </ol>
+            <div class="hud__bar"><span data-hud-bar></span></div>
+            <p class="hud__angle">Поворот <span data-hud-angle>0</span>°</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. ABOUT -->
+      <section class="about" id="clinic" aria-labelledby="about-title">
+        <div class="container">
+          <h2 class="about__title" id="about-title" data-split>Десять лет лечим без спешки</h2>
+          <div class="about__body">
+            <p data-reveal>Первого пациента мы приняли в&nbsp;2015 году, в&nbsp;кабинете на&nbsp;два кресла. Сейчас у&nbsp;нас 15&nbsp;врачей, своя зуботехническая лаборатория и&nbsp;одно правило: на&nbsp;первый приём отводим час, а&nbsp;не&nbsp;пятнадцать минут.</p>
+            <p data-reveal>За&nbsp;этот час врач осмотрит зубы, сделает 3D-снимок и&nbsp;объяснит план лечения обычными словами. С&nbsp;ценами за&nbsp;каждый этап, чтобы потом не&nbsp;было неожиданностей.</p>
+          </div>
+          <ul class="stats" role="list">
+            <li class="stat" data-reveal>
+              <span class="stat__num"><span data-count="10">0</span>+</span>
+              <span class="stat__label">лет работы</span>
+            </li>
+            <li class="stat" data-reveal>
+              <span class="stat__num"><span data-count="5200" data-format>0</span>+</span>
+              <span class="stat__label">пациентов</span>
+            </li>
+            <li class="stat" data-reveal>
+              <span class="stat__num"><span data-count="15">0</span></span>
+              <span class="stat__label">врачей в&nbsp;команде</span>
+            </li>
+            <li class="stat" data-reveal>
+              <span class="stat__num"><span data-count="60">0</span>&nbsp;<small>мин</small></span>
+              <span class="stat__label">на&nbsp;первую консультацию</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 4. DOCTORS -->
+      <section class="doctors" id="doctors" aria-labelledby="doctors-title">
+        <div class="container">
+          <h2 class="doctors__title" id="doctors-title" data-split>Врачи, к&nbsp;которым возвращаются</h2>
+          <p class="doctors__lead" data-reveal>Каждый ведёт своё направление и&nbsp;каждый год учится у&nbsp;коллег из&nbsp;Европы. На&nbsp;сложных случаях собираемся вместе.</p>
+          <ul class="doctors__grid" role="list">
+            <li class="doc" data-reveal data-tilt>
+              <div class="doc__photo doc__photo--a" aria-hidden="true"><span>АВ</span></div>
+              <h3 class="doc__name">Анна Вершинина</h3>
+              <p class="doc__role">Главный врач, терапевт-эндодонтист</p>
+              <p class="doc__exp">14 лет практики</p>
+            </li>
+            <li class="doc" data-reveal data-tilt>
+              <div class="doc__photo doc__photo--b" aria-hidden="true"><span>ТГ</span></div>
+              <h3 class="doc__name">Тимур Галиев</h3>
+              <p class="doc__role">Хирург-имплантолог</p>
+              <p class="doc__exp">12 лет практики</p>
+            </li>
+            <li class="doc" data-reveal data-tilt>
+              <div class="doc__photo doc__photo--c" aria-hidden="true"><span>МО</span></div>
+              <h3 class="doc__name">Мария Ольховская</h3>
+              <p class="doc__role">Ортопед, эстетическая реставрация</p>
+              <p class="doc__exp">9 лет практики</p>
+            </li>
+            <li class="doc" data-reveal data-tilt>
+              <div class="doc__photo doc__photo--d" aria-hidden="true"><span>ИК</span></div>
+              <h3 class="doc__name">Илья Корнеев</h3>
+              <p class="doc__role">Ортодонт, элайнеры и&nbsp;брекеты</p>
+              <p class="doc__exp">11 лет практики</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 5. QUOTE -->
+      <section class="quote" aria-label="Отзыв пациентки">
+        <figure class="container quote__inner">
+          <svg class="quote__mark" viewBox="0 0 80 60" aria-hidden="true"><text x="0" y="78">«</text></svg>
+          <blockquote>
+            <p data-split-words>Восемь лет откладывала стоматолога из-за страха. Здесь вылечила три зуба и&nbsp;ни&nbsp;разу не&nbsp;вцепилась в&nbsp;подлокотники.</p>
+          </blockquote>
+          <figcaption data-reveal>
+            <span>Екатерина Л.</span>
+            пациентка IVORY с&nbsp;2023 года
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- 6. CONTACT -->
+      <section class="contact" id="contacts" aria-labelledby="contact-title">
+        <div class="container contact__inner">
+          <div class="contact__main">
+            <h2 class="contact__title" id="contact-title" data-split>Приходите на&nbsp;консультацию</h2>
+            <p class="contact__lead" data-reveal>Осмотрим, сделаем 3D-снимок и&nbsp;честно скажем, что лечить сейчас, а&nbsp;что может подождать.</p>
+            <button class="btn btn--large" type="button" data-book data-reveal>Записаться на&nbsp;консультацию</button>
+          </div>
+          <dl class="contact__info">
+            <div data-reveal>
+              <dt>Адрес</dt>
+              <dd>Москва, ул.&nbsp;Тверская, 18, стр.&nbsp;1<br /><span>3&nbsp;минуты от&nbsp;метро Пушкинская</span></dd>
+            </div>
+            <div data-reveal>
+              <dt>Телефон</dt>
+              <dd><a href="tel:+74951472836">+7 (495) 147-28-36</a></dd>
+            </div>
+            <div data-reveal>
+              <dt>Часы работы</dt>
+              <dd>Ежедневно, 9:00-21:00</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+    </main>
+
+    <!-- 7. FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <p class="footer__word" aria-hidden="true">IVORY</p>
+        <div class="footer__row">
+          <p class="footer__note">Демо-проект Verto Studio · вымышленный бренд, создан для демонстрации возможностей студии</p>
+          <p class="footer__links">
+            <a href="https://t.me/Verto_Studio" target="_blank" rel="noopener">Telegram @Verto_Studio</a>
+            <a href="https://vertostudio.ru" target="_blank" rel="noopener">vertostudio.ru</a>
+          </p>
+          <a class="badge" href="https://vertostudio.ru" target="_blank" rel="noopener">
+            <span class="badge__v" aria-hidden="true">V</span>
+            <span>Сделано в&nbsp;Verto Studio</span>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <dialog class="booking" data-dialog aria-labelledby="booking-title">
+      <form class="booking__form" method="dialog" data-form novalidate>
+        <button class="booking__close" type="button" aria-label="Закрыть" data-close>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" /></svg>
+        </button>
+        <h2 class="booking__title" id="booking-title">Запись на&nbsp;консультацию</h2>
+        <p class="booking__lead">Администратор перезвонит в&nbsp;течение 15&nbsp;минут и&nbsp;подберёт удобное время.</p>
+        <div class="field">
+          <label for="f-name">Как к&nbsp;вам обращаться</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required />
+          <p class="field__error" data-error="name">Напишите имя, чтобы мы знали, кого спрашивать</p>
+        </div>
+        <div class="field">
+          <label for="f-phone">Телефон</label>
+          <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required />
+          <p class="field__error" data-error="phone">Проверьте номер: нужно 10 цифр после +7</p>
+        </div>
+        <button class="btn btn--block" type="submit">Отправить</button>
+        <p class="booking__demo">Это демо-сайт: заявка никуда не&nbsp;уйдёт, а&nbsp;данные не&nbsp;сохраняются.</p>
+        <div class="booking__done" data-done hidden>
+          <h2 class="booking__title">Готово</h2>
+          <p>На настоящем сайте сейчас позвонил&nbsp;бы администратор. Здесь заявка никуда не&nbsp;ушла: это демо Verto Studio.</p>
+          <button class="btn" type="button" data-close>Хорошо</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
